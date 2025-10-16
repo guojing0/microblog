@@ -105,6 +105,20 @@ wheels = [
 ]
 
 [[package]]
+name = "flask-shell-ipython"
+version = "0.5.3"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "click" },
+    { name = "flask" },
+    { name = "ipython" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/14/85/cd1341451be9f34a5ab8895b596ca606aef6ce643452d47148c17d4a96a9/flask_shell_ipython-0.5.3.tar.gz", hash = "sha256:1a8bb90da18c34d15bc4ad817820101fffa93507a7eb685532ed518aea280848", size = 4001, upload-time = "2024-09-05T21:17:17.691Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/15/e0/5e8480206303e4bd7340d74fce4be21340a762ba1f7ce2c6219def66eff2/flask_shell_ipython-0.5.3-py3-none-any.whl", hash = "sha256:c0a1905671ba7223d36e59854e7900832a0febf127e5c01793377af878560ebd", size = 3914, upload-time = "2024-09-05T21:17:15.931Z" },
+]
+
+[[package]]
 name = "flask-sqlalchemy"
 version = "3.1.1"
 source = { registry = "https://pypi.org/simple" }
@@ -304,6 +318,7 @@ source = { virtual = "." }
 dependencies = [
     { name = "flask" },
     { name = "flask-migrate" },
+    { name = "flask-shell-ipython" },
     { name = "flask-sqlalchemy" },
     { name = "flask-wtf" },
     { name = "ipython" },
@@ -314,6 +329,7 @@ dependencies = [
 requires-dist = [
     { name = "flask", specifier = ">=3.1.2" },
     { name = "flask-migrate", specifier = ">=4.1.0" },
+    { name = "flask-shell-ipython", specifier = ">=0.5.3" },
     { name = "flask-sqlalchemy", specifier = ">=3.1.1" },
     { name = "flask-wtf", specifier = ">=1.2.2" },
     { name = "ipython", specifier = ">=9.6.0" },
