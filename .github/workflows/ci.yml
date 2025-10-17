@@ -28,7 +28,7 @@ jobs:
     
     - name: Install dependencies
       run: |
-        uv sync --dev
+        uv sync
     
     - name: Run linting
       run: |
@@ -69,20 +69,12 @@ jobs:
     
     - name: Install dependencies
       run: |
-        uv sync --dev
+        uv sync
     
     - name: Run security scan
       run: |
-        uv run bandit -r app/ -f json -o bandit-report.json || true
-        uv run safety check --json --output safety-report.json || true
-    
-    - name: Upload security reports
-      uses: actions/upload-artifact@v3
-      with:
-        name: security-reports
-        path: |
-          bandit-report.json
-          safety-report.json
+        uv run bandit -r app/
+        uv run safety check || true
 
   database:
     runs-on: ubuntu-latest
@@ -101,7 +93,7 @@ jobs:
     
     - name: Install dependencies
       run: |
-        uv sync --dev
+        uv sync
     
     - name: Test database migrations
       env:

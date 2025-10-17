@@ -25,7 +25,7 @@ jobs:
     
     - name: Install dependencies
       run: |
-        uv sync --production
+        uv sync --frozen
     
     - name: Run database migrations
       env:
