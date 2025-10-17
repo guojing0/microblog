@@ -1,13 +1,12 @@
 """users table
 
 Revision ID: 29246746c2a5
-Revises: 
+Revises:
 Create Date: 2025-10-16 15:41:28.201580
 
 """
-from alembic import op
 import sqlalchemy as sa
-
+from alembic import op
 
 # revision identifiers, used by Alembic.
 revision = '29246746c2a5'
