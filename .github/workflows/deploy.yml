@@ -1,0 +1,56 @@
+name: Deploy
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:  # Allow manual triggering
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.13"
+    
+    - name: Install uv
+      uses: astral-sh/setup-uv@v3
+      with:
+        version: "latest"
+    
+    - name: Install dependencies
+      run: |
+        uv sync --production
+    
+    - name: Run database migrations
+      env:
+        FLASK_APP: microblog.py
+        SECRET_KEY: ${{ secrets.SECRET_KEY }}
+        DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      run: |
+        uv run flask db upgrade
+    
+    # Example deployment steps - customize based on your hosting platform
+    # - name: Deploy to Heroku
+    #   uses: akhileshns/heroku-deploy@v3.12.12
+    #   with:
+    #     heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+    #     heroku_app_name: "your-app-name"
+    #     heroku_email: "your-email@example.com"
+    
+    # - name: Deploy to Railway
+    #   uses: railwayapp/railway-deploy@v1.0.0
+    #   with:
+    #     railway_token: ${{ secrets.RAILWAY_TOKEN }}
+    #     service: your-service-name
+    
+    # - name: Deploy to DigitalOcean App Platform
+    #   uses: digitalocean/app_action@v1.0.0
+    #   with:
+    #     app_id: ${{ secrets.DO_APP_ID }}
+    #     api_token: ${{ secrets.DO_API_TOKEN }}
