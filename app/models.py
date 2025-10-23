@@ -68,28 +68,34 @@ class User(UserMixin, db.Model):
         return db.session.scalar(query) is not None
 
     def followers_count(self):
-        query = sa.select(sa.func.count()).select_from(
-            self.followers.select().subquery()
+        return db.session.scalar(
+            sa.select(sa.func.count()).select_from(followers).where(
+                followers.c.followed_id == self.id
+            )
         )
-        return db.session.scalar(query)
 
     def following_count(self):
-        query = sa.select(sa.func.count()).select_from(
-            self.following.select().subquery()
+        return db.session.scalar(
+            sa.select(sa.func.count()).select_from(followers).where(
+                followers.c.follower_id == self.id
+            )
         )
-        return db.session.scalar(query)
 
     def following_posts(self):
         Author = orm.aliased(User)
         Follower = orm.aliased(User)
 
-        return {
+        return (
             sa.select(Post)
             .join(Post.author.of_type(Author))
-            .join(Author.followers.of_type(Follower))
-            .where(Follower.id == self.id)
+            .join(Author.followers.of_type(Follower), isouter=True)
+            .where(sa.or_(
+                Author.id == self.id, # author's own posts
+                Follower.id == self.id # posts from followed users
+                ))
+            .group_by(Post) # to avoid duplicate posts
             .order_by(Post.timestamp.desc())
-        }
+        )
 
 class Post(db.Model):
     id: orm.Mapped[int] = orm.mapped_column(primary_key=True)
