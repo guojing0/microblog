@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-11-02 23:27+0800\n"
+"POT-Creation-Date: 2025-11-17 11:54+0800\n"
 "PO-Revision-Date: 2025-11-02 23:27+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -78,51 +78,59 @@ msgstr ""
 msgid "Reset Password"
 msgstr ""
 
-#: app/routes.py:40
+#: app/routes.py:46
 msgid "Your post is now live!"
 msgstr ""
 
-#: app/routes.py:75
+#: app/routes.py:81
 msgid "Congratulations, you are now a registered user!"
 msgstr ""
 
-#: app/routes.py:93
+#: app/routes.py:99
 msgid "Invalid username or password"
 msgstr ""
 
-#: app/routes.py:154
+#: app/routes.py:157
 msgid "Your changes have been saved."
 msgstr ""
 
-#: app/routes.py:171 app/routes.py:195
+#: app/routes.py:174 app/routes.py:198
 #, python-format
 msgid "User %(username)s not found."
 msgstr ""
 
-#: app/routes.py:175
+#: app/routes.py:178
 msgid "You cannot follow yourself!"
 msgstr ""
 
-#: app/routes.py:180
+#: app/routes.py:183
 #, python-format
 msgid "You are following %(username)s!"
 msgstr ""
 
-#: app/routes.py:199
+#: app/routes.py:202
 msgid "You cannot unfollow yourself!"
 msgstr ""
 
-#: app/routes.py:204
+#: app/routes.py:207
 #, python-format
 msgid "You are not following %(username)s."
 msgstr ""
 
-#: app/routes.py:243
+#: app/routes.py:246
 msgid "Check your email for the password reset link."
 msgstr ""
 
-#: app/routes.py:263
+#: app/routes.py:266
 msgid "Your password has been reset."
+msgstr ""
+
+#: app/translate.py:8
+msgid "Error: the translation service is not configured."
+msgstr ""
+
+#: app/translate.py:61 app/translate.py:68 app/translate.py:71
+msgid "Error: the translation service failed."
 msgstr ""
 
 #: app/templates/404.html:4
@@ -143,6 +151,10 @@ msgstr ""
 
 #: app/templates/_post.html:12
 msgid "said"
+msgstr ""
+
+#: app/templates/_post.html:23
+msgid "Translate"
 msgstr ""
 
 #: app/templates/base.html:9

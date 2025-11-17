@@ -131,6 +131,8 @@ class Post(db.Model):
 
     author: orm.Mapped["User"] = orm.relationship(back_populates="posts")
 
+    language: orm.Mapped[str | None] = orm.mapped_column(sa.String(5))
+
     def __repr__(self):
         return f"<Post {self.body}>"
 
