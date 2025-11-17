@@ -16,8 +16,7 @@ class Config:
     MAIL_PASSWORD = os.environ.get("MAIL_PASSWORD")
     ADMINS = ["dev.guoj@gmail.com"]
     LANGUAGES = ["en", "zh"]
-    OPENROUTER_API_KEY = os.environ.get("OPENROUTER_API_KEY")
-    OPENROUTER_HTTP_REFERER = os.environ.get("OPENROUTER_HTTP_REFERER", "")
-    OPENROUTER_APP_NAME = os.environ.get("OPENROUTER_APP_NAME", "Microblog")
+
+    MS_TRANSLATOR_KEY = os.environ.get("MS_TRANSLATOR_KEY")
 
     POSTS_PER_PAGE = 20
