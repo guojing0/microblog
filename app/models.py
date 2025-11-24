@@ -12,10 +12,10 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from app import db, login
 
 followers = sa.Table(
-    "followers",
+    'followers',
     db.metadata,
-    sa.Column("follower_id", sa.Integer, sa.ForeignKey("user.id"), primary_key=True),
-    sa.Column("followed_id", sa.Integer, sa.ForeignKey("user.id"), primary_key=True),
+    sa.Column('follower_id', sa.Integer, sa.ForeignKey('user.id'), primary_key=True),
+    sa.Column('followed_id', sa.Integer, sa.ForeignKey('user.id'), primary_key=True),
 )
 
 
@@ -27,28 +27,28 @@ class User(UserMixin, db.Model):
     email: orm.Mapped[str] = orm.mapped_column(sa.String(120), index=True, unique=True)
     password_hash: orm.Mapped[str | None] = orm.mapped_column(sa.String(256))
 
-    posts: orm.WriteOnlyMapped["Post"] = orm.relationship(back_populates="author")
+    posts: orm.WriteOnlyMapped['Post'] = orm.relationship(back_populates='author')
 
     about_me: orm.Mapped[str | None] = orm.mapped_column(sa.String(140))
     last_seen: orm.Mapped[datetime | None] = orm.mapped_column(
         default=lambda: datetime.now(UTC)
     )
 
-    following: orm.WriteOnlyMapped["User"] = orm.relationship(
+    following: orm.WriteOnlyMapped['User'] = orm.relationship(
         secondary=followers,
         primaryjoin=(followers.c.follower_id == id),
         secondaryjoin=(followers.c.followed_id == id),
-        back_populates="followers",
+        back_populates='followers',
     )
-    followers: orm.WriteOnlyMapped["User"] = orm.relationship(
+    followers: orm.WriteOnlyMapped['User'] = orm.relationship(
         secondary=followers,
         primaryjoin=(followers.c.followed_id == id),
         secondaryjoin=(followers.c.follower_id == id),
-        back_populates="following",
+        back_populates='following',
     )
 
     def __repr__(self):
-        return f"<User {self.username}>"
+        return f'<User {self.username}>'
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -57,8 +57,8 @@ class User(UserMixin, db.Model):
         return check_password_hash(self.password_hash, password)
 
     def avatar(self, size):
-        digest = md5(self.email.lower().encode("utf-8")).hexdigest()
-        return f"https://www.gravatar.com/avatar/{digest}?d=identicon&s={size}"
+        digest = md5(self.email.lower().encode('utf-8')).hexdigest()
+        return f'https://www.gravatar.com/avatar/{digest}?d=identicon&s={size}'
 
     def follow(self, user):
         if not self.is_following(user):
@@ -106,17 +106,17 @@ class User(UserMixin, db.Model):
 
     def get_reset_password_token(self, expires_in=600):
         return jwt.encode(
-            {"reset_password": self.id, "exp": time() + expires_in},
-            current_app.config["SECRET_KEY"],
-            algorithm="HS256",
+            {'reset_password': self.id, 'exp': time() + expires_in},
+            current_app.config['SECRET_KEY'],
+            algorithm='HS256',
         )
 
     @staticmethod
     def verify_reset_password_token(token):
         try:
-            id = jwt.decode(token, current_app.config["SECRET_KEY"], algorithms=["HS256"])[
-                "reset_password"
-            ]
+            id = jwt.decode(
+                token, current_app.config['SECRET_KEY'], algorithms=['HS256']
+            )['reset_password']
         except Exception:
             return None
         return db.session.get(User, id)
@@ -128,14 +128,14 @@ class Post(db.Model):
     timestamp: orm.Mapped[datetime] = orm.mapped_column(
         index=True, default=lambda: datetime.now(UTC)
     )
-    user_id: orm.Mapped[int] = orm.mapped_column(sa.ForeignKey("user.id"), index=True)
+    user_id: orm.Mapped[int] = orm.mapped_column(sa.ForeignKey('user.id'), index=True)
 
-    author: orm.Mapped["User"] = orm.relationship(back_populates="posts")
+    author: orm.Mapped['User'] = orm.relationship(back_populates='posts')
 
     language: orm.Mapped[str | None] = orm.mapped_column(sa.String(5))
 
     def __repr__(self):
-        return f"<Post {self.body}>"
+        return f'<Post {self.body}>'
 
 
 @login.user_loader
