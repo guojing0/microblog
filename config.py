@@ -20,3 +20,8 @@ class Config:
     MS_TRANSLATOR_KEY = os.environ.get("MS_TRANSLATOR_KEY")
 
     POSTS_PER_PAGE = 20
+
+
+class TestConfig(Config):
+    TESTING = True
+    SQLALCHEMY_DATABASE_URI = 'sqlite://'
