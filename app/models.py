@@ -123,6 +123,7 @@ class User(UserMixin, db.Model):
 
 
 class Post(db.Model):
+    __searchable__ = ['body']
     id: orm.Mapped[int] = orm.mapped_column(primary_key=True)
     body: orm.Mapped[str] = orm.mapped_column(sa.String(140))
     timestamp: orm.Mapped[datetime] = orm.mapped_column(

@@ -21,6 +21,8 @@ class Config:
 
     POSTS_PER_PAGE = 20
 
+    ELASTICSEARCH_URL = os.environ.get('ELASTICSEARCH_URL')
+
 
 class TestConfig(Config):
     TESTING = True
